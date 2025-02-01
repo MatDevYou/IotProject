@@ -1,0 +1,12 @@
+services:
+  flask:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: flask-frontend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Frontend:/app
+    environment:
+      - FLASK_ENV=development
