@@ -10,3 +10,16 @@ services:
       - ./Frontend:/app
     environment:
       - FLASK_ENV=development
+    depends_on:
+      - mosquitto  
+
+  mosquitto:
+    image: eclipse-mosquitto:openssl
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"   # Porta MQTT standard
+      - "9001:9001"   # Porta WebSocket MQTT (opzionale)
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log

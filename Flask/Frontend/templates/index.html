@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Gestione MQTT</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Benvenuto nella Flask App</h1>
-        <div class="text-center mt-4">
-            <button class="btn btn-primary" onclick="loadData()">Carica Dati</button>
-        </div>
-        <div id="data" class="mt-4"></div>
-    </div>
+    <h1>MQTT Manager</h1>
+
+    <h2>Pubblica un messaggio</h2>
+    <input type="text" id="topic" placeholder="Inserisci topic">
+    <input type="text" id="message" placeholder="Inserisci messaggio">
+    <button onclick="publishMessage()">Invia</button>
 
     <script>
-        function loadData() {
-            fetch('/api/data')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('data').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-                })
-                .catch(error => console.error('Errore:', error));
+        function publishMessage() {
+            var topic = document.getElementById("topic").value || "test/topic";
+            var message = document.getElementById("message").value || "Ciao MQTT!";
+            
+            fetch("/publish", {
+                method: "POST",
+                body: JSON.stringify({ topic: topic, message: message }),
+                headers: { "Content-Type": "application/json" }
+            });
         }
     </script>
 </body>
